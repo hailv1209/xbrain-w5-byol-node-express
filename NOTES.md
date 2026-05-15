@@ -84,7 +84,8 @@ sam list stack-outputs --region us-west-2
 
 ## Cold Start Measurements
 
-![alt text](image.png)
+![alt text](image-2.png)
+![alt text](image-3.png)
 
 ### ✅ Actual Measurements (2026-05-15)
 
@@ -108,31 +109,35 @@ curl.exe -w "`n`nTTFB: %{time_starttransfer}s`nTotal: %{time_total}s`n" `
 
 ```text
 Cold Start (First Invoke):
-TTFB: 4.173330s
-Total: 4.173624s
+TTFB: 1.691812s
+Total: 1.692835s
 
 Warm Start (Second Invoke):
-TTFB: 3.639488s
-Total: 3.639598s
+TTFB: 0.730090s
+Total: 0.730265s
 ```
 
 ### CloudWatch Lambda REPORT Logs
 
 ```text
 Cold Start:
-Init Duration: 273.71 ms
-Duration: 32.12 ms
+Init Duration: 335.21 ms
+Duration: 24.15 ms
 
 Warm Start:
-Duration: 36.27 ms
+Duration: 3.47 ms
 ```
 
 ### Analysis
 
-- Hiệu năng thực thi của Lambda đang hoạt động tốt.
-- Thời gian khởi tạo runtime Node.js khoảng ~274ms.
-- Thời gian xử lý request thực tế bên trong Lambda chỉ khoảng ~30-36ms.
-- Phần lớn độ trễ (~3.5 giây trở lên) đang xảy ra bên ngoài môi trường Lambda.
+- Hiệu năng Lambda đã được cải thiện đáng kể so với lần test trước.
+- Thời gian khởi tạo runtime Node.js (Cold Start) khoảng ~335ms.
+- Thời gian xử lý logic bên trong Lambda rất nhanh:
+- Cold invoke: ~24ms
+- Warm invoke: ~3–4ms
+- Độ trễ phía client khi cold start (~1.69s) chủ yếu đến từ: API Gateway, Network latency, TLS handshake
+- Các thành phần trung gian ngoài Lambda
+- Khi warm start, tổng thời gian chỉ còn ~0.73s → chứng tỏ Lambda execution gần như không còn là bottleneck.
 
 ### Possible External Latency Sources
 

@@ -62,7 +62,7 @@ sam build
 # Deploy first time (interactive)
 sam deploy --guided
 # Region: us-west-2
-# Function name: byol-node-express
+# Function name: byol-node-express-fn
 # Confirm changes: Y
 # Allow SAM to create IAM role: Y
 
@@ -89,14 +89,14 @@ sam list stack-outputs --region us-west-2
 ### ✅ Actual Measurements (2026-05-15)
 
 ```text
-API Gateway URL:
-https://tvh58h1kz3.execute-api.us-west-2.amazonaws.com/
+Function Name: byol-node-express-fn
+API Gateway URL: https://94mu3dw8da.execute-api.us-west-2.amazonaws.com/
 ```
 
 ### Windows PowerShell Test Command
 
 ```powershell
-$API_URL="https://tvh58h1kz3.execute-api.us-west-2.amazonaws.com/"
+$API_URL="https://94mu3dw8da.execute-api.us-west-2.amazonaws.com/"
 
 curl.exe -w "`n`nTTFB: %{time_starttransfer}s`nTotal: %{time_total}s`n" `
   -o NUL `
@@ -151,3 +151,8 @@ Bottleneck chính hiện tại KHÔNG nằm ở thời gian thực thi Lambda.
 Phần lớn độ trễ đang xảy ra trong quá trình:
 
 Client → API Gateway → Lambda routing/network layers
+
+
+## Evidence pack
+
+![alt text](image-1.png)

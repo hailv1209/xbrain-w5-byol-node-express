@@ -26,7 +26,7 @@ Resources:
   ExpressFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: byol-node-express
+      FunctionName: byol-node-express-fn
       CodeUri: ./
       Handler: lambda.handler
       Tracing: Active

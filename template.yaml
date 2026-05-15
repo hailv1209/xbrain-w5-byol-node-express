@@ -31,19 +31,11 @@ Resources:
       Handler: lambda.handler
       Tracing: Active
       Events:
-        ApiCatchAll:
+        ApiDefault:
           Type: HttpApi
           Properties:
             ApiId: !Ref ExpressHttpApi
-            Path: /{proxy+}
-            Method: ANY
-            PayloadFormatVersion: "2.0"
-        ApiRoot:
-          Type: HttpApi
-          Properties:
-            ApiId: !Ref ExpressHttpApi
-            Path: /
-            Method: ANY
+            RouteKey: $default
             PayloadFormatVersion: "2.0"
 
   ExpressHttpApi:

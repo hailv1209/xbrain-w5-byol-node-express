@@ -129,24 +129,25 @@ Duration: 36.27 ms
 
 ### Analysis
 
-- Lambda execution performance is healthy.
-- Node.js runtime bootstrap is approximately ~274ms.
-- Actual request processing inside Lambda is only ~30-36ms.
-- The majority of latency (~3.5s+) is occurring outside the Lambda execution environment.
+- Hiệu năng thực thi của Lambda đang hoạt động tốt.
+- Thời gian khởi tạo runtime Node.js khoảng ~274ms.
+- Thời gian xử lý request thực tế bên trong Lambda chỉ khoảng ~30-36ms.
+- Phần lớn độ trễ (~3.5 giây trở lên) đang xảy ra bên ngoài môi trường Lambda.
 
 ### Possible External Latency Sources
 
-- API Gateway overhead
+- Overhead từ API Gateway
 - TLS handshake / DNS resolution
-- Regional routing latency
-- VPC networking initialization
-- Client-side network latency
-- CloudFront or proxy layer delays
-- Upstream integrations or middleware
+- Độ trễ routing giữa các region
+- Khởi tạo networking khi dùng VPC
+- Độ trễ mạng phía client
+- CloudFront hoặc proxy layer
+- Middleware hoặc upstream integrations
 
 ### Key Finding
 
-The primary bottleneck is NOT Lambda execution time.
+Bottleneck chính hiện tại KHÔNG nằm ở thời gian thực thi Lambda.
 
-Most latency is introduced between:
+Phần lớn độ trễ đang xảy ra trong quá trình:
+
 Client → API Gateway → Lambda routing/network layers

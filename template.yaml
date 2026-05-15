@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: BYOL challenge — Node.js Express on Lambda (your job to fill in the gaps)
 
@@ -37,14 +37,14 @@ Resources:
             ApiId: !Ref ExpressHttpApi
             Path: /{proxy+}
             Method: ANY
-            PayloadFormatVersion: '2.0'
+            PayloadFormatVersion: "2.0"
         ApiRoot:
           Type: HttpApi
           Properties:
             ApiId: !Ref ExpressHttpApi
             Path: /
             Method: ANY
-            PayloadFormatVersion: '2.0'
+            PayloadFormatVersion: "2.0"
 
   ExpressHttpApi:
     Type: AWS::Serverless::HttpApi

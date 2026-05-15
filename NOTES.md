@@ -169,14 +169,6 @@ aws cloudformation delete-stack `
 rm -Recurse .aws-sam
 ```
 
-## Next Steps
-
-1. ✅ Push code lên GitHub (include NOTES.md này)
-2. ✅ Chạy `sam deploy --guided`
-3. ✅ Lấy API URL từ CloudFormation outputs
-4. ✅ Test API endpoints
-5. ✅ Kiểm tra CloudWatch Logs cho cold start times
-
 ---
 
 **Created**: 2026-05-15  

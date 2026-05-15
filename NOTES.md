@@ -84,20 +84,69 @@ sam list stack-outputs --region us-west-2
 
 ## Cold Start Measurements
 
+![alt text](image.png)
+
 ### ✅ Actual Measurements (2026-05-15)
 
+```text
+API Gateway URL:
+https://tvh58h1kz3.execute-api.us-west-2.amazonaws.com/
 ```
-API Gateway URL: https://tvh58h1kz3.execute-api.us-west-2.amazonaws.com
 
+### Windows PowerShell Test Command
+
+```powershell
+$API_URL="https://tvh58h1kz3.execute-api.us-west-2.amazonaws.com/"
+
+curl.exe -w "`n`nTTFB: %{time_starttransfer}s`nTotal: %{time_total}s`n" `
+  -o NUL `
+  -s `
+  $API_URL
+```
+
+### Client-Side Measurements
+
+```text
 Cold Start (First Invoke):
-  - Total Duration: ~1003ms
-  - Init Duration: ~200-300ms
-  - Request Processing: ~1-5ms
-  
-Warm Start (Subsequent Invokes):
-  - Estimated: ~10-50ms
+TTFB: 4.173330s
+Total: 4.173624s
+
+Warm Start (Second Invoke):
+TTFB: 3.639488s
+Total: 3.639598s
 ```
 
-### Duration Breakdown
-- **init duration** = Node.js runtime bootstrap + serverless-http initialization (~200-300ms)
-- **duration** = actual request processing time (~1-5ms per request)
+### CloudWatch Lambda REPORT Logs
+
+```text
+Cold Start:
+Init Duration: 273.71 ms
+Duration: 32.12 ms
+
+Warm Start:
+Duration: 36.27 ms
+```
+
+### Analysis
+
+- Lambda execution performance is healthy.
+- Node.js runtime bootstrap is approximately ~274ms.
+- Actual request processing inside Lambda is only ~30-36ms.
+- The majority of latency (~3.5s+) is occurring outside the Lambda execution environment.
+
+### Possible External Latency Sources
+
+- API Gateway overhead
+- TLS handshake / DNS resolution
+- Regional routing latency
+- VPC networking initialization
+- Client-side network latency
+- CloudFront or proxy layer delays
+- Upstream integrations or middleware
+
+### Key Finding
+
+The primary bottleneck is NOT Lambda execution time.
+
+Most latency is introduced between:
+Client → API Gateway → Lambda routing/network layers
